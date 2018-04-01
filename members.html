@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Roto2 Space Industries Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="https://getbootstrap.com/docs/4.0/examples/dashboard/dashboard.css" rel="stylesheet">
+      
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bricklayer/0.4.2/bricklayer.min.css">
+      
+    <style>
+        @media (min-width: 576px) {
+            .card-columns {
+                column-count: 2;
+            }
+            
+            .bricklayer-column-sizer {
+                /* divide by 3. */
+                width: 50%;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .card-columns {
+                column-count: 3;
+            }
+            
+            .bricklayer-column-sizer {
+                /* divide by 3. */
+                width: 33.33%;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .card-columns {
+                column-count: 4;
+            }
+            
+            .bricklayer-column-sizer {
+                /* divide by 3. */
+                width: 25%;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .card-columns {
+                column-count: 5;
+            }
+            
+            .bricklayer-column-sizer {
+                /* divide by 3. */
+                width: 20%;
+            }
+        }
+        
+        /*.card-img-top {
+            width: 100%;
+        }*/
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-1 col-md-1 mr-0" href="#">R2SI Dashboard</a>
+      
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="#">Sign out</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-1 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                  <span data-feather="send"></span>
+                  Flota <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="#">
+                  <span data-feather="users"></span>
+                  Miembros
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="more-horizontal"></span>
+                  Próximamente
+                </a>
+              </li>
+            </ul>
+
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Roto2 en RSI</span>
+            </h6>
+            <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="external-link"></span>
+                  ORG Sheet
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="external-link"></span>
+                  Spectrum
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-11 pt-3 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h1 class="h2">Miembros</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <div class="btn-group mr-2">
+                <button class="btn btn-sm btn-outline-secondary">Share</button>
+                <button class="btn btn-sm btn-outline-secondary">Export</button>
+              </div>
+            </div>
+          </div>
+            <!-- <div class="card-columns" id="matriz"> -->
+            <div class="bricklayer" id="matriz">
+
+            </div> 
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="js/papaparse.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bricklayer/0.4.2/bricklayer.min.js"></script>
+    
+    <script>
+        var csvData;
+        $(document).ready(function() {
+            csvData = $.ajax({
+                type: "GET",
+                url: "https://docs.google.com/feeds/download/spreadsheets/Export?key=139XL8vT4ZvdniQulAmIehyzeeph3Xjr9I9GXFDRmUiY&exportFormat=csv",
+                //url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSlB9Du5Kl8TW_X1Jl_XXA-SLNDfAj-3k9rC7_S31Umw2EZtbjgxS04v9LvRZAFvH6V4vjX48cGIuxn/pub?gid=0&single=true&output=csv",
+                //dataType: "text/csv",
+                success: function () {
+                    console.log("done!"+ csvData.getAllResponseHeaders());
+                    fillmatrix(Papa.parse(csvData.responseText).data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.error(xhr.status);
+                    console.error(thrownError);
+                }
+            });
+        })
+        
+        function fillmatrix(d){
+            console.log(d);
+            var shortedMatrix = parseMatrix(d);
+            var html = '';
+            /*
+            for (i = 2; i < 26; i+=2) {
+                for (j=1; j< d[i].length; j++){
+                    if(d[i][j]!=""){
+                        html += '<div class="card bg-dark text-white w-25 m-1">';
+                        html += '<img class="card-img" src="img/Rsi_aurora_mr_flight_visual.jpg" alt="Card image">';
+                        html += '<div class="card-img-overlay">';
+                        html += '<h5 class="card-title">'+d[i][j]+': '+d[i+1][j]+'</h5>';
+                        html += '</div></div>';
+                    }
+                }
+            } */
+            //console.log(shortedMatrix);
+            for (var i = 0; i < shortedMatrix.length; i++) {
+                html += '<div class="card bg-dark text-white m-1" style="width: 15rem;">';
+                html += '<img class="card-img" src="img/Avatar.jpg" alt="Card image">';
+                html += '<div class="card-img-overlay">';
+                html += '<h6 class="card-title"><u>'+shortedMatrix[i][0]+'</u></h6>';
+                html += '<font color="#00ff00">(FC: '+shortedMatrix[i][1]+' T: '+shortedMatrix[i][2]+')</font></br>';
+                for (j=3; j<shortedMatrix.length; j++){
+                    if(typeof shortedMatrix[i][j] !== "undefined") html += ''+shortedMatrix[i][j]+'</br>';
+                }
+                //html += '/<ul>';
+                html += '</div></div>';
+            }
+            document.getElementById("matriz").innerHTML = html;
+            
+        }
+        
+        function parseMatrix(d){
+            var myArray = [];
+            console.log(d[33][0]);
+            for (i = 35; i <= (parseInt(d[33][0])+34); i++) {
+                var miembro = [];
+                miembro.push(d[i][0]);
+                miembro.push(d[i][1]);
+                miembro.push(d[i][2]);
+                console.log(d[i][0]);
+                for (j=3; j< d[i].length; j++){
+                    if(d[i][j]!=""){
+                        miembro.push(d[i][j]);
+                    }
+                }
+                myArray.push(miembro);
+            }
+            //console.log(myArray);
+            //var shortedArray = myArray.sort(comparator);
+            //console.log(shortedArray);
+            //return shortedArray;
+            console.log(myArray);
+            return myArray;
+        }
+
+        function comparator(a, b) {
+           if (parseInt(a[1]) < parseInt(b[1])) return 1;
+           if (parseInt(a[1]) > parseInt(b[1])) return -1;
+           return 0;
+         }
+        
+    </script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+    <!-- Graphs
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script>
+      var ctx = document.getElementById("myChart");
+      var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          datasets: [{
+            data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+            lineTension: 0,
+            backgroundColor: 'transparent',
+            borderColor: '#007bff',
+            borderWidth: 4,
+            pointBackgroundColor: '#007bff'
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: false
+              }
+            }]
+          },
+          legend: {
+            display: false,
+          }
+        }
+      });
+    </script>-->
+  </body>
+</html>
