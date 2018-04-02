@@ -148,7 +148,6 @@
             <div class="bricklayer" id="matriz">
 
             </div> 
-          </div>
         </main>
       </div>
     </div>
@@ -205,7 +204,8 @@
                 html += '<div class="card bg-dark text-white m-1" style="width: 15rem;">';
                 html += '<img class="card-img" src="img/Avatar.jpg" alt="Card image">';
                 html += '<div class="card-img-overlay">';
-                html += '<h6 class="card-title"><a href="https://robertsspaceindustries.com/citizens/'+shortedMatrix[i][0]+'">'+shortedMatrix[i][0]+'</a></h6>';
+                html += '<h6 class="card-title"><a id="'+shortedMatrix[i][0]+'" href="https://robertsspaceindustries.com/citizens/'+shortedMatrix[i][0]+'" style="color: #00FFFF">'+shortedMatrix[i][0]+'</a></h6>';
+				setImg(shortedMatrix[i][0], shortedMatrix[i][0]);
                 html += '<font color="#00ff00">(FC: '+shortedMatrix[i][1]+' T: '+shortedMatrix[i][2]+')</font></br>';
                 for (j=3; j<shortedMatrix.length; j++){
                     if(typeof shortedMatrix[i][j] !== "undefined") html += ''+shortedMatrix[i][j]+'</br>';
@@ -216,6 +216,31 @@
             document.getElementById("matriz").innerHTML = html;
             
         }
+		
+		function setImg(url, ptitle)
+		{
+			$.ajax(
+				{ 
+				url: "https://robertsspaceindustries.com/citizens/"+url, 
+				success: function(data) {
+					var img = $.parseHTML( data ).find("thumb");
+					console.log(img);
+				/*
+					var img = $.parseHTML( data ).find("thumb"), 
+						len = img.length; 
+					if( len > 0 ){
+						var src = img.first().attr("src"); // get id of first image
+					} else {
+						console.log("Image not found");
+					}
+					console.log(src);
+
+					image_tag='<img src="'+src+'" alt="'+ptitle+'"/>';
+					return image_tag;
+				*/
+				} 
+			});
+		}
         
         function parseMatrix(d){
             var myArray = [];
@@ -254,37 +279,5 @@
     <script>
       feather.replace()
     </script>
-
-    <!-- Graphs
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-    <script>
-      var ctx = document.getElementById("myChart");
-      var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-          datasets: [{
-            data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-            lineTension: 0,
-            backgroundColor: 'transparent',
-            borderColor: '#007bff',
-            borderWidth: 4,
-            pointBackgroundColor: '#007bff'
-          }]
-        },
-        options: {
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: false
-              }
-            }]
-          },
-          legend: {
-            display: false,
-          }
-        }
-      });
-    </script>-->
   </body>
 </html>
