@@ -173,12 +173,12 @@
                 //url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSlB9Du5Kl8TW_X1Jl_XXA-SLNDfAj-3k9rC7_S31Umw2EZtbjgxS04v9LvRZAFvH6V4vjX48cGIuxn/pub?gid=0&single=true&output=csv",
                 //dataType: "text/csv",
                 success: function () {
-                    console.log("done!"+ csvData.getAllResponseHeaders());
+                    //console.log("done!"+ csvData.getAllResponseHeaders());
                     fillmatrix(Papa.parse(csvData.responseText).data);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    console.error(xhr.status);
-                    console.error(thrownError);
+                    //console.error(xhr.status);
+                    //console.error(thrownError);
                 }
             });
         })
@@ -202,9 +202,9 @@
             //console.log(shortedMatrix);
             for (var i = 0; i < shortedMatrix.length; i++) {
                 html += '<div class="card bg-dark text-white m-1" style="width: 15rem;">';
-                html += '<img class="card-img" src="img/Avatar.jpg" alt="Card image">';
+                html += '<img class="card-img" src="img/Avatar.jpg" alt="Card image" id="'+shortedMatrix[i][0]+'">';
                 html += '<div class="card-img-overlay">';
-                html += '<h6 class="card-title"><a id="'+shortedMatrix[i][0]+'" href="https://robertsspaceindustries.com/citizens/'+shortedMatrix[i][0]+'" style="color: #00FFFF">'+shortedMatrix[i][0]+'</a></h6>';
+                html += '<h6 class="card-title"><a href="https://robertsspaceindustries.com/citizens/'+shortedMatrix[i][0]+'" style="color: #00FFFF">'+shortedMatrix[i][0]+'</a></h6>';
 				setImg(shortedMatrix[i][0], shortedMatrix[i][0]);
                 html += '<font color="#00ff00">(FC: '+shortedMatrix[i][1]+' T: '+shortedMatrix[i][2]+')</font></br>';
                 for (j=3; j<shortedMatrix.length; j++){
@@ -217,40 +217,29 @@
             
         }
 		
-		function setImg(url, ptitle)
+		function setImg(id, ptitle)
 		{
-			$.ajax(
-				{ 
-				url: "https://robertsspaceindustries.com/citizens/"+url, 
-				success: function(data) {
-					var img = $.parseHTML( data ).find("thumb");
-					console.log(img);
-				/*
-					var img = $.parseHTML( data ).find("thumb"), 
-						len = img.length; 
-					if( len > 0 ){
-						var src = img.first().attr("src"); // get id of first image
-					} else {
-						console.log("Image not found");
-					}
-					console.log(src);
-
-					image_tag='<img src="'+src+'" alt="'+ptitle+'"/>';
-					return image_tag;
-				*/
-				} 
-			});
+            $.getJSON("http://sc-api.com/?api_source=live&system=accounts&action=full_profile&target_id="+id+"&expedite=0&format=pretty_json")
+              .done(function( json ) {
+                if (json.data != null) document.getElementById(id).src = json.data.avatar;
+                //console.log(document.getElementById(id));
+                //console.log(json.data.avatar);
+              })
+              .fail(function( jqxhr, textStatus, error ) {
+                //var err = textStatus + ", " + error;
+                //console.log( "Request Failed: " + err );
+            });
 		}
         
         function parseMatrix(d){
             var myArray = [];
-            console.log(d[33][0]);
+            //console.log(d[33][0]);
             for (i = 35; i <= (parseInt(d[33][0])+34); i++) {
                 var miembro = [];
                 miembro.push(d[i][0]);
                 miembro.push(d[i][1]);
                 miembro.push(d[i][2]);
-                console.log(d[i][0]);
+                //console.log(d[i][0]);
                 for (j=3; j< d[i].length; j++){
                     if(d[i][j]!=""){
                         miembro.push(d[i][j]);
